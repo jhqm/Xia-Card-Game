@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Enemy/Ennemy.gd" type="Script" id=2]
+[ext_resource path="res://UI/lifeBar/lifebar.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 79.5681
+height = 144.055
+
+[sub_resource type="Animation" id=2]
+resource_name = "HurtEffect"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.667, 0 ), Vector2( 8.667, 0 ), Vector2( 1.667, 0 ), Vector2( 5.667, 0 ), Vector2( 1.667, 0 ), Vector2( 2.667, 0 ), Vector2( 1.667, 0 ) ]
+}
+
+[node name="Ennemy" type="Node2D"]
+scale = Vector2( 0.6, 0.6 )
+script = ExtResource( 2 )
+
+[node name="EnemeyArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemeyArea"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="EnemeyArea"]
+position = Vector2( 1.667, 0 )
+
+[node name="hurtEffect" type="AnimationPlayer" parent="EnemeyArea"]
+anims/HurtEffect = SubResource( 2 )
+
+[node name="lifebar" parent="." instance=ExtResource( 3 )]
+[connection signal="beingAttacked" from="." to="lifebar" method="_on_Ennemy_beingAttacked"]
+[connection signal="area_entered" from="EnemeyArea" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="EnemeyArea" to="." method="_on_Area2D_area_exited"]
+[connection signal="animation_started" from="EnemeyArea/hurtEffect" to="." method="_on_hurtEffect_animation_started"]

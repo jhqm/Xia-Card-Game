@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://cards/card1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://background/1501502186226804.png" type="Texture" id=2]
+[ext_resource path="res://characters/character.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Enemy/Ennemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://UI/CardSpawn.tscn" type="PackedScene" id=5]
+[ext_resource path="res://UI/CardUsed.tscn" type="PackedScene" id=6]
+
+[node name="Combat interface" type="Node2D"]
+
+[node name="background" type="Sprite" parent="."]
+position = Vector2( 600, 290 )
+scale = Vector2( 1.16, 1.24212 )
+z_index = -1
+texture = ExtResource( 2 )
+
+[node name="position1" type="Position2D" parent="."]
+position = Vector2( 424, 448 )
+scale = Vector2( 0.525424, 0.525424 )
+
+[node name="character" parent="." instance=ExtResource( 3 )]
+position = Vector2( 191, 354 )
+
+[node name="card1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 429.345, 496.999 )
+
+[node name="card2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 615.609, 496.954 )
+collision_layer = 2147483649
+
+[node name="Ennemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1025, 357 )
+
+[node name="CardSpawn" parent="." instance=ExtResource( 5 )]
+position = Vector2( 141, 498 )
+
+[node name="CardUsed" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1105, 512 )

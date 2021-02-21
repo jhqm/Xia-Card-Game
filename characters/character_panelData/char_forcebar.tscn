@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://characters/character_panelData/char_forcebar.gd" type="Script" id=1]
+[ext_resource path="res://background/panel3.png" type="Texture" id=2]
+[ext_resource path="res://fonts/庞门正道真贵楷体.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 200
+outline_size = 5
+outline_color = Color( 0.231373, 0.8, 0.972549, 1 )
+font_data = ExtResource( 3 )
+
+[node name="char_forcebar" type="Node2D"]
+scale = Vector2( 0.2, 0.3 )
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -742.385
+margin_top = -124.32
+margin_right = -472.385
+margin_bottom = 80.68
+size_flags_stretch_ratio = 7.79
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_constants/shadow_as_outline = -1
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="progress under" type="Sprite" parent="."]
+position = Vector2( -416.5, 0 )
+scale = Vector2( 0.501505, 0.153571 )
+texture = ExtResource( 2 )
+offset = Vector2( 830.5, 0 )
+
+[node name="UnderTween" type="Tween" parent="progress under"]
+
+[node name="progress" type="Sprite" parent="."]
+modulate = Color( 0.0235294, 0.678431, 0.827451, 1 )
+position = Vector2( -416.5, 0 )
+scale = Vector2( 0.501505, 0.153571 )
+texture = ExtResource( 2 )
+offset = Vector2( 830.5, 0 )
+
+[node name="ProgressTween" type="Tween" parent="progress"]
+
+[node name="border" type="Sprite" parent="."]

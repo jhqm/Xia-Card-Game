@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://fistAttack.png" type="Texture" id=1]
+
+[node name="Combat interface" type="Node2D"]
+
+[node name="fistAttack" type="Sprite" parent="."]
+position = Vector2( 314, 461.559 )
+scale = Vector2( 0.525424, 0.525424 )
+texture = ExtResource( 1 )
