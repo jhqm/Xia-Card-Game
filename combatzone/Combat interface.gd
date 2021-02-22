@@ -1,6 +1,6 @@
 extends Node2D
 
-
+# 初始化变量
 onready var CardBase =  preload("res://cards/cardBase.tscn")
 onready var PLAYERDECK = $"/root/PlayerDeck"
 onready var playerdeck = PLAYERDECK.duplicate()
