@@ -7,7 +7,9 @@ onready var playerdeck = PLAYERDECK.duplicate()
 var inhands = []
 var inhands_cardinstance = []
 var graveyard = []
+var hover = [] setget hoverSet
 var number_inhands = 0
+
 
 var index_cardWillSpawn = []
 onready var Decksize = playerdeck.CardList.size()
@@ -44,10 +46,6 @@ func card_spwan_muti(count,_number_of_spawn):
 		print('hands full again!')
 		
 
-#0
-#-30,30
-#-60,0,60
-#-90,-30,30,90
 
 #随机生成抽取卡牌(不放回式抽取)	
 func cardSpawn():
@@ -62,6 +60,11 @@ func cardSpawn():
 			inhands.append(playerdeck.CardList[index_cardWillSpawn])
 			new_card.cardName = playerdeck.CardList[index_cardWillSpawn]
 			
+			
+			#new_card.z_index = inhands_cardinstance.size()
+			#new_card.originalZ = new_card.z_index
+
+			
 			number_inhands = inhands.size()
 			
 			#分配卡牌生成位置
@@ -71,7 +74,7 @@ func cardSpawn():
 				
 
 			
-			#从牌组中去除这一张
+			#从牌库中去除这一张
 			playerdeck.CardList.remove(index_cardWillSpawn)
 			Decksize = playerdeck.CardList.size()
 			
@@ -89,6 +92,7 @@ func cardSpawn():
 func card_position_sort(_number_inhands):
 		var count = 1
 		for i in inhands_cardinstance:
+			i.originalZ = count
 			if count<_number_inhands:
 				
 				#i.CARDSPAWN.seek(0.7)
@@ -114,7 +118,7 @@ func card_position_sort(_number_inhands):
 func card_position_resort(_number_inhands):
 		var count = 1
 		for i in inhands_cardinstance:
-			
+			i.originalZ = count
 			i.card_moving_animation(i.position,get_node("position1").position + Vector2((_number_inhands-1)*(-40),0) + Vector2((count-1)*80,0))
 
 			#i.position = get_node("position1").position + Vector2((_number_inhands-1)*(-40),0) + Vector2((count-1)*80,0)
@@ -122,3 +126,7 @@ func card_position_resort(_number_inhands):
 			
 			count += 1
 		
+func hoverSet(new_value):
+	hover=new_value
+	print("hoverSet")
+	

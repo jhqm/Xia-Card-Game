@@ -10,6 +10,8 @@ var cardSize = Vector2(280,400)
 var originalPosition 
 var cardForEnemy = ['phy','weapon']
 var cardForPlayer = ['qi','heal']
+var originalZ 
+var dragable = false
 
 #卡牌数据初始化导入
 onready var db = preload("res://cards/cardsDB.gd")
@@ -51,7 +53,8 @@ func _ready():
 	#yield(get_tree().create_timer(0.01),"timeout")
 	#var originalPosition = position
 	card_spawn_animation(originalPosition)
-	print('spawn_animi')
+	print('originalZ',originalZ)
+
 
 	#position = originalPosition
 	
@@ -66,10 +69,12 @@ func _process(delta):
 	
 
 	
-	if dragmouse == true:
+	if dragmouse == true and dragable == true:
+		#增加被选择边框
 		$"card-border_selected".visible = true
+		#拖拽跟随
 		position = get_global_mouse_position()+position_delta
-		#print("pressed")
+
 		
 	else:
 		position_delta = Vector2.ZERO
@@ -123,8 +128,8 @@ func _process(delta):
 		else:
 			$"card-border_selected".visible = false
 			emit_signal("cardreturn")
-			print('cardreturn')
-			print(CARDETURN.is_active())
+			#print('cardreturn')
+			#print(CARDETURN.is_active())
 			set_process(false)
 
 
@@ -138,12 +143,14 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 			CARDETURN.remove_all()
 
 
-			z_index = 1
+			#z_index = get_node('../..').inhands_cardinstance.size()+1
+			z_index =1
 			position_delta = position-get_global_mouse_position()
 			dragmouse = true
 			set_process(true)
 		else:
 			dragmouse = false
+			#z_index = originalZ
 			z_index = 0
 
 
@@ -156,27 +163,75 @@ func _on_Area2D_mouse_entered():
 		pass
 	else:
 		if honver_active :
+			
+			print ("order",originalZ)
+			get_tree().current_scene.hover.append(self.originalZ)
 
-			z_index =1
-			CARDETURN.remove_all()
-			honver.remove_all()
-			honver.interpolate_property(self,"position",position,originalPosition + Vector2(0,-60), 0.7,Tween.TRANS_QUINT,Tween.EASE_OUT)
-			honver.start()
+			#防鼠标穿透过滤
+			for i in get_tree().current_scene.inhands_cardinstance:
+				if get_tree().current_scene.hover.has(i.originalZ):
+					if i.originalZ == get_tree().current_scene.hover.max():
+						print(get_tree().current_scene.hover)
+						i.z_index = 1
+						i.cardhoverAnimation()
+						print('yyyy')
+						i.dragable = true
+						
+					else:
+						i.z_index = 0
+						i.cardUnhoverAnimation()
+						i.dragable = false
 
-			print("mouse enterd!")
-			print(honver.is_active())
-
-
-#鼠标over退出
+			
+#鼠标hover退出
 func _on_Area2D_mouse_exited():
+
 	if honver_active:
-		z_index = 0
-		CARDETURN.remove_all()
-		honver.remove_all()
-		honver.interpolate_property(self,"position",position,originalPosition, 0.7,Tween.TRANS_QUINT,Tween.EASE_OUT)
-		honver.start()
-		print("mouse left!")
-		print(honver.is_active())
+		
+		var index = get_tree().current_scene.hover.find(self.originalZ)
+		get_tree().current_scene.hover.remove(index)
+		#print(get_tree().current_scene.hover)
+		
+		#防鼠标穿透过滤
+		if get_tree().current_scene.hover == []:
+			z_index = 0
+			cardUnhoverAnimation()
+		for i in get_tree().current_scene.inhands_cardinstance:
+				if get_tree().current_scene.hover.has(i.originalZ):
+					if i.originalZ == get_tree().current_scene.hover.max():
+						print(get_tree().current_scene.hover)
+						i.z_index = 1
+						i.cardhoverAnimation()
+						i.dragable = true
+						
+					else:
+						i.z_index = 0
+						i.cardUnhoverAnimation()
+						i.dragable = false
+				else:
+					i.z_index = 0
+					i.cardUnhoverAnimation()
+					print('xxxxx')
+					i.dragable = false
+
+		
+#hover升起效果
+func cardhoverAnimation():
+	CARDETURN.remove_all()
+	honver.remove_all()
+	honver.interpolate_property(self,"position",position,originalPosition + Vector2(0,-60), 0.7,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	honver.start()
+
+
+#hover退出效果
+func cardUnhoverAnimation():		
+	CARDETURN.remove_all()
+	honver.remove_all()
+	honver.interpolate_property(self,"position",position,originalPosition, 0.7,Tween.TRANS_QUINT,Tween.EASE_OUT)
+	honver.start()
+
+
+
 
 #卡片生成动画效果
 func card_spawn_animation(_position):

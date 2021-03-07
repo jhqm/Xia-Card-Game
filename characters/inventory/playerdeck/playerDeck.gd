@@ -8,6 +8,11 @@ var CardList = [
 	'fistAttack',
 	'fistAttack',
 	'fistAttack',
+	'fistAttack',
+	'fistAttack',
+	'fistAttack',
+	'yunqi',
+	'yunqi',
 	'yunqi',
 	'yunqi',
 	'yunqi']

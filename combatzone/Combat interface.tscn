@@ -12,6 +12,9 @@
 
 [node name="Combat interface" type="Node2D"]
 script = ExtResource( 7 )
+__meta__ = {
+"_editor_description_": "comabt_interface"
+}
 
 [node name="background" type="Sprite" parent="."]
 position = Vector2( 600, 290 )
@@ -31,10 +34,10 @@ texture = ExtResource( 2 )
 position = Vector2( 0, 60.6594 )
 
 [node name="CardSpawn" parent="." instance=ExtResource( 5 )]
-position = Vector2( 141, 498 )
+position = Vector2( 132, 630 )
 
 [node name="CardUsed" parent="." instance=ExtResource( 6 )]
-position = Vector2( 1105, 512 )
+position = Vector2( 1090, 646 )
 
 [node name="position1" type="Position2D" parent="."]
 position = Vector2( 613.761, 498 )
@@ -43,10 +46,10 @@ scale = Vector2( 0.525424, 0.525424 )
 [node name="character" parent="." instance=ExtResource( 3 )]
 position = Vector2( 191, 354 )
 
-[node name="cards" type="Node2D" parent="."]
-
 [node name="Ennemy" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1025, 357 )
+
+[node name="cards" type="Node2D" parent="."]
 [connection signal="pressed" from="CardSpawn/TextureButton" to="." method="_on_TextureButton_pressed"]
 
 [editable path="CardSpawn"]
