@@ -1,6 +1,6 @@
 extends Node2D
 
-
+#玩家装配牌库
 var CardList = [
 	'fistAttack',
 	'fistAttack',
@@ -17,6 +17,14 @@ var CardList = [
 	'yunqi',
 	'yunqi']
 
+
+#玩家剩余牌库
+var CardInventory = [
+	'fistAttack'
+	
+	
+	
+]
 
 
 

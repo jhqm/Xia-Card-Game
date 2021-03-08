@@ -69,7 +69,7 @@ func _process(delta):
 	
 
 	
-	if dragmouse == true and dragable == true:
+	if dragmouse == true :
 		#增加被选择边框
 		$"card-border_selected".visible = true
 		#拖拽跟随
@@ -132,22 +132,26 @@ func _process(delta):
 			#print(CARDETURN.is_active())
 			set_process(false)
 
-
+func CardeEffectExcute():
+	pass
+	
 
 
 #检测卡牌上的点击事件
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
+		
 		if event.is_pressed():
-			honver.remove_all()
-			CARDETURN.remove_all()
+			if dragable:
+				honver.remove_all()
+				CARDETURN.remove_all()
 
 
-			#z_index = get_node('../..').inhands_cardinstance.size()+1
-			z_index =1
-			position_delta = position-get_global_mouse_position()
-			dragmouse = true
-			set_process(true)
+				#z_index = get_node('../..').inhands_cardinstance.size()+1
+				z_index =1
+				position_delta = position-get_global_mouse_position()
+				dragmouse = true
+				set_process(true)
 		else:
 			dragmouse = false
 			#z_index = originalZ
@@ -174,7 +178,6 @@ func _on_Area2D_mouse_entered():
 						print(get_tree().current_scene.hover)
 						i.z_index = 1
 						i.cardhoverAnimation()
-						print('yyyy')
 						i.dragable = true
 						
 					else:
@@ -211,7 +214,6 @@ func _on_Area2D_mouse_exited():
 				else:
 					i.z_index = 0
 					i.cardUnhoverAnimation()
-					print('xxxxx')
 					i.dragable = false
 
 		
