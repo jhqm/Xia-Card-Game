@@ -6,6 +6,7 @@ onready var CARDETURN = $cardReturn
 onready var CARDDESPAWN = $cardDespawn
 onready var CARDSPAWN = $cardSpawn
 onready var CARDMOVING = $cardMoving
+var cardID = null
 var cardSize = Vector2(280,400)
 var originalPosition 
 var cardForEnemy = ['phy','weapon']
@@ -86,7 +87,7 @@ func _process(delta):
 			#手牌数组删除以及墓地数组增加	
 			var delete_index_ins = get_node('../..').inhands_cardinstance.find(get_node("."))
 			get_node('../..').inhands_cardinstance.remove(delete_index_ins)
-			var delete_index = get_node('../..').inhands.find(cardName)
+			var delete_index = get_node('../..').inhands.find(cardID)
 			
 			get_node('../..').graveyard.append(get_node('../..').inhands[delete_index_ins])
 			get_node('../..').inhands.remove(delete_index)
@@ -168,17 +169,18 @@ func _on_Area2D_mouse_entered():
 	else:
 		if honver_active :
 			
-			print ("order",originalZ)
+			#print ("order",originalZ)
 			get_tree().current_scene.hover.append(self.originalZ)
 
 			#防鼠标穿透过滤
 			for i in get_tree().current_scene.inhands_cardinstance:
 				if get_tree().current_scene.hover.has(i.originalZ):
 					if i.originalZ == get_tree().current_scene.hover.max():
-						print(get_tree().current_scene.hover)
+						#print(get_tree().current_scene.hover)
 						i.z_index = 1
 						i.cardhoverAnimation()
 						i.dragable = true
+						print(cardID)
 						
 					else:
 						i.z_index = 0
@@ -202,7 +204,7 @@ func _on_Area2D_mouse_exited():
 		for i in get_tree().current_scene.inhands_cardinstance:
 				if get_tree().current_scene.hover.has(i.originalZ):
 					if i.originalZ == get_tree().current_scene.hover.max():
-						print(get_tree().current_scene.hover)
+						#print(get_tree().current_scene.hover)
 						i.z_index = 1
 						i.cardhoverAnimation()
 						i.dragable = true

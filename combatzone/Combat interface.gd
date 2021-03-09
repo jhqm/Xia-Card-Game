@@ -58,7 +58,8 @@ func cardSpawn():
 			#随机抽取牌组中的一张，并将这张送往手牌
 			index_cardWillSpawn = randi()%Decksize
 			inhands.append(playerdeck.CardList[index_cardWillSpawn])
-			new_card.cardName = playerdeck.CardList[index_cardWillSpawn]
+			new_card.cardName = playerdeck.PlayerCardDB[playerdeck.CardList[index_cardWillSpawn]]['name']
+			new_card.cardID = playerdeck.CardList[index_cardWillSpawn]
 			
 			
 			#new_card.z_index = inhands_cardinstance.size()
@@ -99,6 +100,7 @@ func card_position_sort(_number_inhands):
 				#i.CARDSPAWN.remove_all()
 				#print(i.CARDSPAWN.tell())
 #				i.CARDSPAWN.remove_all()
+				
 				i.card_moving_animation(i.position,get_node("position1").position + Vector2((_number_inhands-1)*(-40),0) + Vector2((count-1)*80,0))
 				i.originalPosition = get_node("position1").position + Vector2((_number_inhands-1)*(-40),0) + Vector2((count-1)*80,0)
 				
