@@ -50,6 +50,7 @@ position = Vector2( 191, 354 )
 position = Vector2( 1025, 357 )
 
 [node name="cards" type="Node2D" parent="."]
+[connection signal="Deck_empty" from="." to="." method="_on_Combat_interface_Deck_empty"]
 [connection signal="pressed" from="CardSpawn/TextureButton" to="." method="_on_TextureButton_pressed"]
 
 [editable path="CardSpawn"]

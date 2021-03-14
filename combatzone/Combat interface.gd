@@ -10,6 +10,7 @@ var graveyard = []
 var hover = [] setget hoverSet
 var number_inhands = 0
 
+signal Deck_empty
 
 var index_cardWillSpawn = []
 onready var Decksize = playerdeck.CardList.size()
@@ -24,10 +25,39 @@ func _ready():
 
 
 func _on_TextureButton_pressed():
-
+	carddraw()
+	
+	
+func carddraw():
 	var count = 1
 	var number_of_spawn = get_node("/root/CharPanelDb").playerDB[5]-inhands_cardinstance.size()
 	card_spwan_muti(count,number_of_spawn)
+		
+
+		
+			
+func _on_Combat_interface_Deck_empty():
+	if graveyard.size() == 0:
+			print("no card at all!")
+	else:
+		#把墓地里的牌全部转移到玩家牌库中
+		playerdeck.CardList = graveyard.duplicate()
+		graveyard = []
+		#播放墓地转移动画
+
+		#墓地数字更新
+		get_node('CardUsed/Label').text = str( graveyard.size())
+		
+		#牌组数及显示刷新
+		Decksize = playerdeck.CardList.size()
+		get_node("CardSpawn/TextureButton/Label").text = str(Decksize)
+
+		#递归开始
+		carddraw()
+
+
+		
+		
 
 #抽取多张卡牌
 func card_spwan_muti(count,_number_of_spawn):
@@ -62,8 +92,7 @@ func cardSpawn():
 			new_card.cardID = playerdeck.CardList[index_cardWillSpawn]
 			
 			
-			#new_card.z_index = inhands_cardinstance.size()
-			#new_card.originalZ = new_card.z_index
+
 
 			
 			number_inhands = inhands.size()
@@ -85,7 +114,8 @@ func cardSpawn():
 			print('hands full!')
 		
 	else: 
-		print('no card!')
+		print('_no card!')
+		emit_signal("Deck_empty")
 		
 		
 		
@@ -132,3 +162,5 @@ func hoverSet(new_value):
 	hover=new_value
 	print("hoverSet")
 	
+
+
