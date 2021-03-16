@@ -28,7 +28,8 @@ CharPanelDb="*res://characters/character_panelData/Char_panelDB.tscn"
 
 window/size/width=1200
 window/size/height=720
-window/size/resizable=false
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [input]
 

@@ -2,6 +2,7 @@ extends Node2D
 
 # 初始化变量
 onready var CardBase =  preload("res://cards/cardBase.tscn")
+onready var inventoryWindow = preload("res://UI/Cardinventory_inCombat/Inventory.tscn")
 onready var PLAYERDECK = $"/root/PlayerDeck"
 onready var playerdeck = PLAYERDECK.duplicate()
 var inhands = []
@@ -9,6 +10,7 @@ var inhands_cardinstance = []
 var graveyard = []
 var hover = [] setget hoverSet
 var number_inhands = 0
+var inventoryOpen = false
 
 signal Deck_empty
 
@@ -23,11 +25,19 @@ func _ready():
 
 
 
-
+#打开查看现有牌组
 func _on_TextureButton_pressed():
+	if not inventoryOpen:
+		inventoryOpen = true
+		var open_inventory = inventoryWindow.instance()
+		get_node(".").add_child(open_inventory)
+	
+
+#回合结束，重新发牌
+func _on_EndRoundButton_pressed():
 	carddraw()
-	
-	
+
+
 func carddraw():
 	var count = 1
 	var number_of_spawn = get_node("/root/CharPanelDb").playerDB[5]-inhands_cardinstance.size()
@@ -35,7 +45,7 @@ func carddraw():
 		
 
 		
-			
+#如果牌库空了且墓地牌数不为0，则将墓地重新洗回牌库
 func _on_Combat_interface_Deck_empty():
 	if graveyard.size() == 0:
 			print("no card at all!")
